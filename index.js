@@ -23,7 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use("/api", indexRoute)
  
-
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to the Multi Vendoring Backend🧑🏼‍🍳",
+  });
+});
 
 process.on("uncaughtException", (err)=>{
     console.log("Error uncaught", err);
