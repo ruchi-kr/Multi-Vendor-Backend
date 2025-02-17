@@ -1,0 +1,38 @@
+const CONSTANTS_MESSAGES = {
+    USER_EXISTS: "User already exists",
+    USER_INACTIVE: "User inactive. Contact OPD Sure for reactivation",
+    INTERNAL_SERVER_ERROR: "Something went wrong. Please try again",
+    USER_NOT_FOUND: "User not found in database ",
+    ID_NOT_FOUND: "Id not found in database",    
+    WRONG_PASSWORD: "Wrong password entered",
+    PASSWORD_MISMATCH: "Password and confirm password does not match",
+    EMAIL_EXISTS: "Email already registered",
+    MOBILE_EXISTS: "Mobile already registered",
+    COUPON_CODE_EXISTS: "Coupon code already exists",
+    NAME_EXISTS: "Name already exists",
+    INVALID_TOKEN: "Invalid jwt token",
+    ADMIN_NOT_FOUND: "Admin not found in database",
+    ADMIN_INACTIVE: "Admin is inactive",
+    INVALID_PASSWORD: "Password must contains 1 Uppercase 1 Number and 1 Special Character with length at least 8",
+    UNAUTHORIZED: "Not authorized.",
+    TOKEN_NOT_FOUND: "Token not found",
+    INVALID_OTP: "Invalid OTP",
+    INVALID_ROLE: "Invalid Role",
+    OTP_EXPIRED: "OTP is expired.",
+    OLD_NEW_PASSWORD_ERROR: "New password can't be same as old password",
+   
+    SUCCESS: "API executed successfully",
+    SIGN_IN_SUCCESS: "Sign in successfully",
+    SIGN_UP_SUCCESS: "Sign up successfully",
+    LOGOUT_SUCCESS: "Logout successfully",
+    OTP_SEND_SUCCESS: "OTP sent successfully",
+    RIDER_ADDED_SUCCESSFULLY: "Rider added successfully",
+    DELIVERY_AGENT_ADDED_SUCCESSFULLY: "Delivery agent added successfully",
+    RESTAURANT_ADDED_SUCCESSFULLY: "Restaurant added successfully",
+    VENDOR_ADDED_SUCCESSFULLY: "Vendor added successfully",
+    INVALID_FILE_TYPE: "Invalid file type",
+    INVALID_FILE_SIZE: "Invalid file size",
+  }
+  
+  module.exports = CONSTANTS_MESSAGES;
+  
