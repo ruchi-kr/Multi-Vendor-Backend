@@ -14,10 +14,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 // app.use(cors());
 
-app.use(morgan('dev'))
-  app.use(morgan('common', {
-      stream: fs.createWriteStream(path.join(__dirname, 'Logs/access.log'), { flags: 'a' })
-  }))
+// app.use(morgan('dev'))
+//   app.use(morgan('common', {
+//       stream: fs.createWriteStream(path.join(__dirname, 'Logs/access.log'), { flags: 'a' })
+//   }))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
