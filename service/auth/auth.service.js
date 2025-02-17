@@ -89,9 +89,9 @@ const AuthService = {
             email,
             password: hashedPassword,
             role,
-            additional_detail_model: AdditionData.getAdditionalDetailModel(role),
+            additional_detail_model: AdditionalData.getAdditionalDetailModel(role),
         });
-        const additionalDetailsData = await AdditionData.createAdditionalDetails(role, user._id);
+        const additionalDetailsData = await AdditionalData.createAdditionalDetails(role, user._id);
         user.additional_detail = additionalDetailsData._id;
         await user.save();
         // const token = await JwtSign({
