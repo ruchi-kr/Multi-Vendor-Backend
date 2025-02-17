@@ -6,7 +6,7 @@ var fs = require('fs')
 require("./DB_CONFIG")
 const indexRoute = require("./Router/index")
 const path = require("path");
-
+const config = require("./Config");
 const cors = require('cors');
 const corsOptions = {
 	exposedHeaders: ["Authorization","isAdmin","user_id","designation","role","user_type"],
@@ -25,8 +25,12 @@ app.use("/api", indexRoute)
  
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Welcome to the Multi Vendoring Backend🧑🏼‍🍳",
+    message: "Welcome to the Multi Backend🧑🏼‍🍳",
   });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} 🤝`);
 });
 
 process.on("uncaughtException", (err)=>{
