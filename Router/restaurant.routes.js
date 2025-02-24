@@ -3,7 +3,11 @@ const router = express.Router();
 const { ValidateRequest, RestaurantAuth } = require("../Middleware");
 const { UserAuthSchema, CommonSchema, UserSchema, AdminSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
-const { UserAuthController, UserController } = require("../controller");
+const { RestaurantController, PublicController } = require("../controller");
+const multer = require("multer")
+const upload = multer();
+
+router.post("/upload-files", RestaurantAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 
 // router.get("/get-profile", UserAuth, CatchAsync(UserAuthController.GetProfile));
 // router.get("/get-members", UserAuth, CatchAsync(UserController.GetMembers));

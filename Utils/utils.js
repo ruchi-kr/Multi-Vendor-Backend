@@ -1,6 +1,6 @@
-const axios = require("axios")
-const { v4: uuidv4 } = require("uuid")
-// const { handleFileUploadToS3, getImageUrl } = require("./s3")
+const axios = require("axios");
+const { v4: uuidv4 } = require("uuid");
+const { uploadDocument } = require("./Cloudinary");
 const {  CouponUsagesDal,  UserNotificationsDAL, ManagementNotificationsDAL, AdminNotificationsDAL } = require("../DAL");
 const config = require("../Config");
 const bcrypt = require("bcrypt");
@@ -10,9 +10,10 @@ const Utils = {
 
     generateRandomToken: async () => { return uuidv4() },
 
-    generateOTP: async () => {return otpGenerator.generate(4,{ lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false }); },
+    generateOTP: async () => { return otpGenerator.generate(4, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false }); },
 
-    // UploadFile: handleFileUploadToS3,
+    UploadFile: uploadDocument,
+    //UploadMultiFile : uploadMultiDocuments,
 
     // getFileURL: getImageUrl,
 

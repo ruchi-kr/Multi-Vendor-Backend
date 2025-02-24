@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const { ValidateRequest, AdminAuth, ValidatePrivilege } = require("../Middleware/index");
-const { AdminAuthSchema, CommonSchema, SysSettingsSchema, CouponSchema, AdminSchema, } = require("../Validation");
+const { AuthSchema, CommonSchema, AdminSchema, } = require("../Validation");
 const { CatchAsync } = require("../Utils");
-const { AdminAuthController, SysSettingsController, CouponController, AdminController} = require("../controller");
+const { AuthController, AdminController, PublicController} = require("../controller");
 const { CONSTANTS } = require("../Constant");
+const multer = require("multer")
+const upload = multer();
+
+router.post("/upload-files", AdminAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
+
+
 // router.post("/upload-file", AdminAuth, upload.array('files', 5), CatchAsync(AdminController.UploadFile))
 
 // router.post("/signup", ValidateRequest(AdminAuthSchema.Signup, "body"), CatchAsync(AdminAuthController.SignUp));
