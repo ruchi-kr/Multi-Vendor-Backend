@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const { ValidateRequest, UserAuth } = require("../Middleware");
+const { ValidateRequest, UserAuth, VendorAuth } = require("../Middleware");
 const { UserAuthSchema, CommonSchema, UserSchema, AdminSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
 const { UserAuthController, UserController } = require("../controller");

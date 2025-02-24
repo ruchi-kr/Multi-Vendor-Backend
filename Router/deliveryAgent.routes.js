@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const { ValidateRequest, } = require("../Middleware");
+const { ValidateRequest, AgentAuth } = require("../Middleware");
 const { CommonSchema,  DeliveryAgentSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
 const {  DeliveryAgentController } = require("../controller");
