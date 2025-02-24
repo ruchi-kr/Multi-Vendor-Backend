@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const {CONSTANTS} = require("../Constant");
+const { UploadFile } = require("../Utils/utils");
 
 const CommonSchema = {
 
@@ -18,6 +19,10 @@ const CommonSchema = {
         startDate: Joi.date().iso().less('now').optional(),      
         endDate: Joi.date().iso().greater(Joi.ref('startDate')).optional(), 
         internalStatus:Joi.string().max(4).optional()
+    }),
+
+    UploadFile: Joi.object().keys({
+        file: Joi.any().required()
     }),
 
     ForgotPassword: Joi.object().keys({
@@ -49,15 +54,6 @@ const CommonSchema = {
         razorpay_payment_id: Joi.string().required(),
         razorpay_signature: Joi.string().required()
     }),
-
-    PlanPagination: Joi.object().keys({
-        search:Joi.string().min(0).max(50).optional(),
-        page: Joi.string().regex(/^\d+$/).max(10000).optional(),
-        pageSize: Joi.string().regex(/^\d+$/).max(1000).optional(),
-        sortBy:Joi.string().optional(),
-        sortOrder:Joi.string().optional(),
-        corporateFilter:Joi.string().optional(),
-    }),  
 
     ContactEmail: Joi.object().keys({
         email : Joi.string().regex(CONSTANTS.REGEX.EMAIL).required(),
