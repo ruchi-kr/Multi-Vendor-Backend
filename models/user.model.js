@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { CONSTANTS } = require("../Constant");
 const config = require("../Config");
-const { ref } = require("joi");
 const encryptionKey = crypto.createHash('sha256').update(config.ENCRYPTION_KEY).digest();
 const iv = crypto.randomBytes(16);
 
@@ -25,6 +24,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [false, "Please provide a password"],
       maxlength: 500,
+      get: (v) => decrypt(v),
+      set: (v) => encrypt(v),
     },
 
     phone: {
@@ -68,7 +69,11 @@ const UserSchema = new mongoose.Schema(
     },
 
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { getters: true },
+    toObject: { getters: true }, 
+  }
 );
 
 function encrypt(text) {

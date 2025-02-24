@@ -34,8 +34,13 @@ const UserSchema = {
         }).required()
     }),
 
-    DeleteAddress: Joi.object().keys({
-        user_id: Joi.string().required(),
+    UpdateProfile: Joi.object().keys({
+        name: Joi.string().regex(CONSTANTS.REGEX.PERSON_NAME).optional(),
+        email: Joi.string().email().optional(),
+        phone: Joi.string().regex(CONSTANTS.REGEX.PHONE).optional(),
+        country_code: Joi.string().regex(CONSTANTS.REGEX.COUNTRY_CODE).optional(),
+        password : Joi.string().regex(CONSTANTS.PASSWORD_VALIDATION_REGEX).optional(),
+        profile_image: Joi.string().optional(),
     }),
 }
 
