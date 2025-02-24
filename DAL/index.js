@@ -14,6 +14,8 @@ const RestaurantDetailsDal = require("./restaurant/restaurantDetails.dal");
 const AdminDetailsDal = require("./admin/adminDetails.dal");
 const BankDetailsDal = require("./bank.dal");
 
+const UserAddressDal = require("./user/userAddress.dal");
+
 module.exports = {
     AdminDal,
     UserDal,
@@ -29,5 +31,7 @@ module.exports = {
     DeliveryAgentDetailsDal,
     RestaurantDetailsDal,
     AdminDetailsDal,
-    BankDetailsDal
+    BankDetailsDal,
+
+    UserAddressDal,
 };

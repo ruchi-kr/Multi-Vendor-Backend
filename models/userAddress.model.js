@@ -1,25 +1,23 @@
 const mongoose = require("mongoose");
-const {CONSTANTS} = require("../Constant");
+const { CONSTANTS } = require("../Constant");
 
 const AddNewAddress = new mongoose.Schema({
-  user: {
+  user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true,
   },
   name: {
-    type: String,
+    type: Number,
     enum: Object.values(CONSTANTS.USER_ADDRESS_TYPE),
     required: true,
   },
-  addressLine1: {
+  addressLine: {
     type: String,
     required: true,
   },
-  addressLine2: {
-    type: String,
-  },
-  landmark: {
+
+  street: {
     type: String,
     required: true,
   },
@@ -35,24 +33,24 @@ const AddNewAddress = new mongoose.Schema({
   //     type: String,
   //     required: true,
   //   },
-  phoneNumber: {
-    type: Number,
+  phone_number: {
+    type: String,
   },
-  pincode: {
+  pin_code: {
     type: Number,
     required: true,
   },
   location: {
     type: {
-        type: String,
-        enum: Object.values(CONSTANTS.LOCATION),
-        // required: true,
+      type: Number,
+      enum: Object.values(CONSTANTS.LOCATION_TYPE),
+      // required: true,
     },
     coordinates: {
-        type: [Number],
-        // required: true,
+      type: [Number],
+      // required: true,
     },
-},
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -64,4 +62,4 @@ const AddNewAddress = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("user_addresses", AddNewAddress,"user_addresses");
+module.exports = mongoose.model("user_addresses", AddNewAddress, "user_addresses");

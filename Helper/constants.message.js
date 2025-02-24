@@ -3,6 +3,7 @@ const CONSTANTS_MESSAGES = {
     USER_INACTIVE: "User inactive. Contact OPD Sure for reactivation",
     INTERNAL_SERVER_ERROR: "Something went wrong. Please try again",
     USER_NOT_FOUND: "User not found in database ",
+    USER_DETAILS_NOT_FOUND: "User details not found in database",
     ID_NOT_FOUND: "Id not found in database",    
     WRONG_PASSWORD: "Wrong password entered",
     PASSWORD_MISMATCH: "Password and confirm password does not match",

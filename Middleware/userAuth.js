@@ -4,8 +4,10 @@ const { CONSTANTS_MESSAGES } = require("../Helper");
 const { StatusCodes } = require("http-status-codes");
 const { AuthDal } = require("../DAL");
 const { ApiError } = require("../Utils");
+const { ROLE } = require("../Constant/Constant");
 
-const Auth = async (req, res, next) => {
+const UserAuth = async (req, res, next) => {
+
   try {
     const token = req.headers.authorization;
     if (!token || !token.startsWith('Bearer ')) {
@@ -14,22 +16,19 @@ const Auth = async (req, res, next) => {
     const tokenValue = token.split(' ')[1];
     const decodedToken = await new Promise((resolve, reject) => {
       jwt.verify(tokenValue, config.JWT_PRIVATE_KEY, (err, decoded) => {
-        if (err) reject(err);
+        if (err) reject(new ApiError(CONSTANTS_MESSAGES.INVALID_TOKEN, StatusCodes.UNAUTHORIZED));
         resolve(decoded);
       });
     });
-    const { _id } = decodedToken;
+    const { _id, role } = decodedToken;
     const user = await AuthDal.GetUser({ _id });
-
+    if (role !== ROLE.USER) {
+      throw new ApiError(CONSTANTS_MESSAGES.FORBIDDEN, StatusCodes.FORBIDDEN);
+    }
     if (!user) {
       throw new ApiError(CONSTANTS_MESSAGES.USER_NOT_FOUND, StatusCodes.NOT_FOUND);
     }
 
-    // if (!user.token.includes(tokenValue)) {
-    //   throw new ApiError(CONSTANTS_MESSAGES.INVALID_TOKEN, StatusCodes.UNAUTHORIZED);
-    // }
-
-    // If everything is valid, attach token and user to request object
     req.token = tokenValue;
     req.user = user;
     next();
@@ -39,4 +38,5 @@ const Auth = async (req, res, next) => {
   }
 };
 
-module.exports = Auth;
+
+module.exports = UserAuth;

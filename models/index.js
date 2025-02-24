@@ -14,7 +14,7 @@ const cart = require("./cart.model");
 const dish = require("./dish.model");
 const order = require("./orders.model");
 const ratingAndReview = require("./ratingAndReview.model");
-const userAddresses = require("./userAddress.model");
+const UserAddresses = require("./userAddress.model");
 const offers = require("./offer.model");
 const coupons = require("./coupon.model");
 
@@ -39,7 +39,7 @@ module.exports = {
     dish,
     order,
     ratingAndReview,
-    userAddresses,
+    UserAddresses,
     offers,
     coupons,
 

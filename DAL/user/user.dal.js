@@ -2,12 +2,12 @@ const { user } = require("../../models");
 
 const UserDal = {
 
-  GetAllUsers: async (query, params,pagination) => {
-    const {offset,sortObject,pageSize} = pagination;
-    return await user.find(query).select(params).sort(sortObject).skip(offset)
-    .populate({path:"corporate", select :"name"})
-    .limit(Number(pageSize)).lean();
-  },
+  // GetAllUsers: async (query, params,pagination) => {
+  //   const {offset,sortObject,pageSize} = pagination;
+  //   return await user.find(query).select(params).sort(sortObject).skip(offset)
+  //   .populate({path:"corporate", select :"name"})
+  //   .limit(Number(pageSize)).lean();
+  // },
 
   GetUser: async (query, params) =>await user.findOne(query).select(params).lean(),
   
