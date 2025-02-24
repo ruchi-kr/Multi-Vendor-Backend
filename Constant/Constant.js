@@ -178,8 +178,9 @@ const CONSTANTS = {
         OTHER: 10
     },
 
-    LOCATION: {
-        POINT: 0
+    LOCATION_TYPE: {
+        POINT: 0,
+        POLYGON: 1
     },
 
     AVAILABILITY_STATUS: {

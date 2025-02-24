@@ -35,7 +35,7 @@ const restaurantDetailsSchema = new mongoose.Schema({
     location: {
         type: {
             type: String,
-            enum: Object.values(CONSTANTS.LOCATION),
+            enum: Object.values(CONSTANTS.LOCATION_TYPE),
             // required: true,
         },
         coordinates: {

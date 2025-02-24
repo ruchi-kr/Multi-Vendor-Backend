@@ -8,7 +8,7 @@ const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
 const { JwtSign, ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const  AdditionalData = require("../../Helper/user.helper");
+const AdditionalData = require("../../Helper/user.helper");
 
 const AuthService = {
 
@@ -30,7 +30,7 @@ const AuthService = {
         const existingOtp = await AuthDal.GetOTP({ phone, country_code }, "-__v -createdAt -expiresAt");
         if (!existingOtp || existingOtp.otp !== otp || dayjs().isAfter(dayjs(existingOtp.expiresAt))) {
             throw new ApiError(CONSTANTS_MESSAGES.INVALID_OTP, StatusCodes.BAD_REQUEST);
-        }    
+        }
         await AuthDal.DeleteOTP(existingOtp._id);
         let user = await AuthDal.GetUser({ phone, country_code, role }, "-__v -createdAt -updatedAt");
         if (!user) {
@@ -45,7 +45,7 @@ const AuthService = {
                 name: null
             });
             const additionalDetailsData = await AdditionalData.createAdditionalDetails(role, user._id);
-            console.log(additionalDetailsData,"additionalDetailsData");
+            console.log(additionalDetailsData, "additionalDetailsData");
             user.additional_detail = additionalDetailsData._id;
             await user.save();
         }
@@ -58,7 +58,7 @@ const AuthService = {
         return { token, user };
     },
 
-    SignIn : async (data) => {
+    SignIn: async (data) => {
         const { email, password } = data;
         const user = await AuthDal.GetUser({ email }, "-__v -createdAt -updatedAt");
         if (!user) {
@@ -90,19 +90,34 @@ const AuthService = {
             password: hashedPassword,
             role,
             additional_detail_model: AdditionalData.getAdditionalDetailModel(role),
+            phone: null,
+            country_code: null,
+            profile_image: null,
+            name: null
         });
         const additionalDetailsData = await AdditionalData.createAdditionalDetails(role, user._id);
         user.additional_detail = additionalDetailsData._id;
         await user.save();
-        // const token = await JwtSign({
-        //     _id: user._id,
-        //     email: user.email,
-        //     role: user?.role,
-        // });
-        // return { token, user };
         return user;
     },
 
+    ForgotPassword: async (data) => {
+        const { email } = data;
+        const user = await AuthDal.GetUser({ email }, "-__v -createdAt -updatedAt");
+        if (!user) {
+            throw new ApiError(CONSTANTS_MESSAGES.USER_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+        const otp = await Utils.generateOTP();
+        const otpPayload = { email, otp, expiresAt: Date.now() + 300000 };
+        const otpBody = await AuthDal.CreateOTP(otpPayload);
+        await NOTIFICATIONS.sendPasswordResetEmail(user, otpBody.otp);
+        return otpBody;
+    },
+
+    GetProfile: async (user) => {
+        const profile = await AuthDal.GetUser({ _id: user._id }, "-__v -createdAt -updatedAt");
+        return profile;
+    },
 
 }
 

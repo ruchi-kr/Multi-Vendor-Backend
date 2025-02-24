@@ -64,7 +64,7 @@ const RiderSchema = {
           .default(CONSTANTS.AVAILABILITY_STATUS.AVAILABLE),
       
         location: Joi.object({
-          type: Joi.string().valid(...Object.values(CONSTANTS.LOCATION)).optional(),
+          type: Joi.string().valid(...Object.values(CONSTANTS.LOCATION_TYPE)).optional(),
           coordinates: Joi.array().items(Joi.number()).length(2).optional(),
         }).optional(),
       

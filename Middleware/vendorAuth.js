@@ -6,7 +6,7 @@ const { AuthDal } = require("../DAL");
 const { ApiError } = require("../Utils");
 const { ROLE } = require("../Constant/Constant");
 
-const AdminAuth = async (req, res, next) => {
+const VendorAuth = async (req, res, next) => {
 
   try {
     const token = req.headers.authorization;
@@ -20,15 +20,15 @@ const AdminAuth = async (req, res, next) => {
         resolve(decoded);
       });
     });
-    const { _id, role } = decodedToken;
+    const { _id,role  } = decodedToken;
     const user = await AuthDal.GetUser({ _id });
-    if (role !== ROLE.ADMIN) {
+    if (role !== ROLE.VENDOR) {
       throw new ApiError(CONSTANTS_MESSAGES.FORBIDDEN, StatusCodes.FORBIDDEN);
     }
     if (!user) {
       throw new ApiError(CONSTANTS_MESSAGES.USER_NOT_FOUND, StatusCodes.NOT_FOUND);
     }
-
+    
     req.token = tokenValue;
     req.user = user;
     next();
@@ -38,4 +38,5 @@ const AdminAuth = async (req, res, next) => {
   }
 };
 
-module.exports = AdminAuth;
+
+module.exports = VendorAuth;

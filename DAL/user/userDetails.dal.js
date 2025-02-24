@@ -2,7 +2,7 @@ const { UserDetails } = require("../../models");
 // const {otp} = require("../models");
 
 const UserDetailsDal = {
-  GetUser: async (query, params) => await UserDetails.findOne(query).select(params),
+  GetUserDetails: async (query, params) => await UserDetails.findOne(query).select(params),
   
   GetAllUser: async (query, params) => await UserDetails.find().select(),
   
