@@ -3,7 +3,11 @@ const router = express.Router();
 const { ValidateRequest, UserAuth } = require("../Middleware");
 const { UserAuthSchema, CommonSchema, UserSchema, AdminSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
-const { UserController, AuthController } = require("../controller");
+const { UserController, AuthController, PublicController } = require("../controller");
+const multer = require("multer")
+const upload = multer();
+
+router.post("/upload-files", UserAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 
 router.get("/get-profile", UserAuth, CatchAsync(AuthController.GetProfile));
 router.put("/update-profile", UserAuth, ValidateRequest(UserSchema.UpdateProfile, "body"), CatchAsync(UserController.UpdateProfile));

@@ -4,6 +4,10 @@ const { CONSTANTS_MESSAGES } = require("../../Helper");
 const { ResponseHandler } = require("../../Utils");
 
 const UserController = {
+    // UploadFile: async (req, res) => {
+    //     const data = await UserService.UploadFile(req.user, req.files)
+    //     ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
+    //   },
 
     UpdateProfile: async (req, res) => {
         const body = req.body;

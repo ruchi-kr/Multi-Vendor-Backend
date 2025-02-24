@@ -3,8 +3,11 @@ const router = express.Router();
 const { ValidateRequest, AgentAuth } = require("../Middleware");
 const { CommonSchema,  DeliveryAgentSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
-const {  DeliveryAgentController } = require("../controller");
+const {  DeliveryAgentController, PublicController } = require("../controller");
+const multer = require("multer")
+const upload = multer();
 
+router.post("/upload-files", AgentAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 
 // router.post("/login", ValidateRequest(AuthSchema.Login, "body"), CatchAsync(HRAuthController.Login));
 // router.post("/logout", HRAuth, CatchAsync(HRAuthController.Logout));

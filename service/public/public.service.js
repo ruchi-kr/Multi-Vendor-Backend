@@ -4,25 +4,22 @@ const {
 
 } = require("../../DAL");
 const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
-const { JwtSign, ApiError, Utils } = require("../../Utils");
+const {ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
 
 const PublicService = {
 
-    SendOtp: async (data) => {
-        const { phone, country_code } = data;
-        const otp = await Utils.generateOTP();
-        const existingOtp = await AuthDal.GetOTP({ phone, country_code }, "-__v -createdAt -expiresAt");
-        if (existingOtp) {
-            const updatedOtp = await AuthDal.UpdateOTP(existingOtp._id, { otp, expiresAt: Date.now() + 300000 });
-            return updatedOtp;
-        }
-        const otpPayload = { phone, country_code, otp, expiresAt: Date.now() + 300000 };
-        const otpBody = await AuthDal.CreateOTP(otpPayload);
-        return otpBody;
-    },
+    UploadFile: async (user, files) => {
+        const uploadPromises = files?.map(async (file) => {
+          console.log(file,"file");
+          const token = await Utils.generateRandomToken();
+          const role = Object.keys(CONSTANTS.ROLE).find(key => CONSTANTS.ROLE[key] === user.role);
+          const fileName = `${role}/${token}/${file.originalname}`;
+          return Utils.UploadFile(file, fileName, file.mimetype);
+        });
+        return await Promise.all(uploadPromises);
+      },
 
 
 }
