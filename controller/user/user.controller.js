@@ -2,13 +2,12 @@ const { UserService } = require("../../service");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS_MESSAGES } = require("../../Helper");
 const { ResponseHandler } = require("../../Utils");
-const { AddAddress } = require("../../Validation/user/user");
 
 const UserController = {
 
-    AddUserDetails: async (req, res) => {
+    UpdateProfile: async (req, res) => {
         const body = req.body;
-        const data = await UserService.AddUserDetails(body);
+        const data = await UserService.UpdateProfile(body, req.user);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
     },
 
@@ -17,7 +16,7 @@ const UserController = {
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
     },
 
-    GetUserAddress : async (req, res) => {
+    GetUserAddress: async (req, res) => {
         const data = await UserService.GetUserAddress(req.params.id);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
     },
@@ -29,7 +28,7 @@ const UserController = {
     },
 
     UpdateAddress: async (req, res) => {
-        const body = req.body;      
+        const body = req.body;
         const data = await UserService.UpdateAddress(body);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
     },
@@ -44,7 +43,7 @@ const UserController = {
         const data = await UserService.DeleteAllAddress(req.user);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.SUCCESS);
     },
-    
+
 };
 
 module.exports = UserController;

@@ -4,13 +4,15 @@ const {
     UserDetailsDal,
 } = require("../../DAL");
 const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
-const { JwtSign, ApiError, Utils } = require("../../Utils");
+const { ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
-const { GetUserAddress } = require("../../DAL/user/userAddress.dal");
 
 const UserService = {
+
+    UpdateProfile: async (body, user) => {
+     await AuthDal.UpdateUser({ _id: user._id }, body, "-__v -createdAt -updatedAt");       
+    },
 
     GetUserAddress: async (id) => {
         const data = await UserAddressDal.GetUserAddress({ _id: id }, "-__v -createdAt -updatedAt");
