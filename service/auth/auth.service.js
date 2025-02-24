@@ -45,7 +45,6 @@ const AuthService = {
                 name: null
             });
             const additionalDetailsData = await AdditionalData.createAdditionalDetails(role, user._id);
-            console.log(additionalDetailsData, "additionalDetailsData");
             user.additional_detail = additionalDetailsData._id;
             await user.save();
         }
@@ -115,7 +114,7 @@ const AuthService = {
     },
 
     GetProfile: async (user) => {
-        const profile = await AuthDal.GetUser({ _id: user._id }, "-__v -createdAt -updatedAt");
+        const profile = await AuthDal.GetUser({ _id: user._id }, "-__v -createdAt -updatedAt -additional_detail -additional_detail_model");
         return profile;
     },
 
