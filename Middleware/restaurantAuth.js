@@ -6,7 +6,7 @@ const { AuthDal } = require("../DAL");
 const { ApiError } = require("../Utils");
 const { ROLE } = require("../Constant/Constant");
 
-const VendorAuth = async (req, res, next) => {
+const RestaurantAuth = async (req, res, next) => {
 
     try {
         const token = req.headers.authorization;
@@ -39,4 +39,4 @@ const VendorAuth = async (req, res, next) => {
 };
 
 
-module.exports = VendorAuth;
+module.exports = RestaurantAuth;
