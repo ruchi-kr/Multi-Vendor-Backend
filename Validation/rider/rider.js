@@ -4,7 +4,6 @@ const { CONSTANTS } = require("../../Constant");
 const RiderSchema = {
 
   UpdateRiderDetails: Joi.object({
-        userId : Joi.string().required(),
         basic_details: Joi.object({
           driver_name: Joi.string().regex(CONSTANTS.REGEX.PERSON_NAME).required(),
           email: Joi.string().regex(CONSTANTS.REGEX.EMAIL).required(),
