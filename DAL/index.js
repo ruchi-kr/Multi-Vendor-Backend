@@ -15,6 +15,7 @@ const AdminDetailsDal = require("./admin/adminDetails.dal");
 const BankDetailsDal = require("./bank.dal");
 
 const UserAddressDal = require("./user/userAddress.dal");
+const SystemSettingsDal = require("./admin/systemSettings.dal");
 
 module.exports = {
     AdminDal,
@@ -34,4 +35,5 @@ module.exports = {
     BankDetailsDal,
 
     UserAddressDal,
+    SystemSettingsDal,
 };

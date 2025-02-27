@@ -5,9 +5,9 @@ const { ResponseHandler } = require("../../Utils");
 
 const VendorController = {
 
-    AddVendorDetails: async (req, res) => {
+    UpdateVendorDetails: async (req, res) => {
         const body = req.body;
-        const data = await VendorService.AddVendorDetails(body);
+        const data = await VendorService.UpdateVendorDetails(req.user, body);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.VENDOR_ADDED_SUCCESSFULLY);
     },
 };

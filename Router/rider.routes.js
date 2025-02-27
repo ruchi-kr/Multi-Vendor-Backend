@@ -9,7 +9,7 @@ const upload = multer();
 
 router.post("/upload-files", RiderAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 
-router.post("/add-rider-details", RiderAuth, ValidateRequest(RiderSchema.AddRiderDetails, "body"), CatchAsync(RiderController.AddRiderDetails));
+router.put("/update-rider-details", RiderAuth, ValidateRequest(RiderSchema.UpdateRiderDetails, "body"), CatchAsync(RiderController.UpdateRiderDetails));
 
 
 module.exports = router

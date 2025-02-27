@@ -19,16 +19,16 @@ const bankDetailsSchema = new mongoose.Schema({
     // required: true,
     unique: true,
     trim: true,
-    // set: (val) => encrypt(val),
-    // get: (val) => decrypt(val),
+    set: (val) => encrypt(val),
+    get: (val) => decrypt(val),
   },
 
   ifscCode: {
     type: String,
     // required: true,
     trim: true,
-    // set: (val) => encrypt(val),
-    // get: (val) => decrypt(val),
+    set: (val) => encrypt(val),
+    get: (val) => decrypt(val),
   },
   
   createdAt: {
@@ -50,6 +50,8 @@ const bankDetailsSchema = new mongoose.Schema({
 );
 
 function encrypt(text) {
+  if (!text) return "";
+  console.log(text,"text encrypt function");
   const cipher = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
   let encrypted = cipher.update(text, 'utf8', 'hex');
   encrypted += cipher.final('hex');
@@ -58,6 +60,8 @@ function encrypt(text) {
 }
 
 function decrypt(encryptedText) {
+  if (!encryptedText) return "";
+  console.log(encryptedText,"encryptedText decrypt function");
   const [ivHex, encrypted] = encryptedText.split(':');
   const iv = Buffer.from(ivHex, 'hex');
   const decipher = crypto.createDecipheriv('aes-256-cbc', encryptionKey, iv);
@@ -65,8 +69,6 @@ function decrypt(encryptedText) {
   decrypted += decipher.final('utf8');
   return decrypted;
 }
-
-
 
 
 module.exports = mongoose.model("bank_details", bankDetailsSchema);

@@ -5,9 +5,9 @@ const { ResponseHandler } = require("../../Utils");
 
 const RiderController = {
 
-    AddRiderDetails: async (req, res) => {
+    UpdateRiderDetails: async (req, res) => {
         const body = req.body;
-        const data = await RiderService.AddRiderDetails(body);
+        const data = await RiderService.UpdateRiderDetails(req.user,body);
         ResponseHandler(res, StatusCodes.OK, data, true, CONSTANTS_MESSAGES.RIDER_ADDED_SUCCESSFULLY);
     },
 };

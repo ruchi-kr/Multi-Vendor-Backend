@@ -1,39 +1,24 @@
-const dayjs = require("dayjs");
 const {
     AuthDal,
     RiderDetailsDal,
+    SystemSettingsDal,
 } = require("../../DAL");
 const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
-const { JwtSign, ApiError, Utils } = require("../../Utils");
+const { ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
 
 const AdminService = {
 
-    AddRiderDetails: async (data) => {
-        const existingRider = await RiderDetailsDal.findOne({ phone: data.phone });
-        if (existingRider) {
-            throw new ApiError(StatusCodes.CONFLICT, CONSTANTS_MESSAGES.RIDER_ALREADY_EXISTS);
-        }
-        const riderData = {
-            phone: data.phone,
-            country_code: data.country_code,
-            earningsHistory: data.earningsHistory || [],
-            createdAt: dayjs().toISOString(),
-        };
+    GetSettings: async () => await SystemSettingsDal.GetSettings({},"-__v -createdAt -updatedAt"),
 
-        // Save rider details in the database
-        const newRider = await RiderDetailsDal.create(riderData);
-
-        return {
-            message: CONSTANTS_MESSAGES.RIDER_ADDED_SUCCESSFULLY,
-            rider: newRider,
-        };
-
+    EditSettings: async (params, body) => {
+       await SystemSettingsDal.EditSettings({ _id: params.id }, body);
     },
 
+    
 
+    
 }
 
 
