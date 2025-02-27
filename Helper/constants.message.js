@@ -27,12 +27,15 @@ const CONSTANTS_MESSAGES = {
     SIGN_UP_SUCCESS: "Sign up successfully",
     LOGOUT_SUCCESS: "Logout successfully",
     OTP_SEND_SUCCESS: "OTP sent successfully",
-    RIDER_ADDED_SUCCESSFULLY: "Rider added successfully",
+    RIDER_ADDED_SUCCESSFULLY: "Rider Updated successfully",
     DELIVERY_AGENT_ADDED_SUCCESSFULLY: "Delivery agent added successfully",
     RESTAURANT_ADDED_SUCCESSFULLY: "Restaurant added successfully",
-    VENDOR_ADDED_SUCCESSFULLY: "Vendor added successfully",
+    VENDOR_ADDED_SUCCESSFULLY: "Vendor Updated successfully",
     INVALID_FILE_TYPE: "Invalid file type",
     INVALID_FILE_SIZE: "Invalid file size",
+    BANK_DETAILS_EXISTS: "Bank details already exists",
+    PAN_ALREADY_EXISTS: "Pan Already Exists",
+    AADHAR_ALREADY_EXISTS:"Aadhar Already Exists"
   }
   
   module.exports = CONSTANTS_MESSAGES;

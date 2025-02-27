@@ -1,13 +1,14 @@
 const express = require("express")
 const router = express.Router();
-const { ValidateRequest, UserAuth, VendorAuth } = require("../Middleware");
-const { UserAuthSchema, CommonSchema, UserSchema, AdminSchema } = require("../Validation");
+const { ValidateRequest, VendorAuth } = require("../Middleware");
+const { CommonSchema, VendorSchema } = require("../Validation");
 const { CatchAsync } = require("../Utils");
-const { UserAuthController, UserController, VendorController, PublicController } = require("../controller");
+const { VendorController, PublicController } = require("../controller");
 const multer = require("multer")
 const upload = multer();
 
 router.post("/upload-files", VendorAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
+router.put("/update-vendor-details", VendorAuth, ValidateRequest(VendorSchema.UpdateVendorDetails, "body"), CatchAsync(VendorController.UpdateVendorDetails));
 
 // router.get("/get-profile", UserAuth, CatchAsync(UserAuthController.GetProfile));
 // router.get("/get-members", UserAuth, CatchAsync(UserController.GetMembers));

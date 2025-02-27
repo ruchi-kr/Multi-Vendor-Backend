@@ -8,6 +8,7 @@ const RiderDetails = require("./riderDetails.model");
 const VendorDetails = require("./vendorDetails.model");
 
 const BankDetails = require("./bankDetails.model");
+const SystemSettings = require("./systemSettings.model");
 
 const otp = require("./otps.model");
 const cart = require("./cart.model");
@@ -33,6 +34,7 @@ module.exports = {
     VendorDetails,
 
     BankDetails,
+    SystemSettings,
 
     otp,
     cart,

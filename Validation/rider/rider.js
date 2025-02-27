@@ -3,10 +3,8 @@ const { CONSTANTS } = require("../../Constant");
 
 const RiderSchema = {
 
-    AddRiderDetails: Joi.object({
-
+  UpdateRiderDetails: Joi.object({
         userId : Joi.string().required(),
-
         basic_details: Joi.object({
           driver_name: Joi.string().regex(CONSTANTS.REGEX.PERSON_NAME).required(),
           email: Joi.string().regex(CONSTANTS.REGEX.EMAIL).required(),
@@ -24,7 +22,7 @@ const RiderSchema = {
           license_number: Joi.string().regex(CONSTANTS.REGEX.DRIVING_LICENSE).required(),
           license_issue_date: Joi.date().required(),
           license_expiry_date: Joi.date().greater(Joi.ref("license_issue_date")).required(),
-          license_document: Joi.string().required(),
+          license_doc: Joi.array().items(Joi.string()).length(2).required(),
         }).required(),
       
         vehicle_details: Joi.object({
@@ -57,8 +55,7 @@ const RiderSchema = {
           accountNumber: Joi.string().pattern(CONSTANTS.REGEX.BANK_ACCOUNT).required(),
           ifscCode: Joi.string().pattern(CONSTANTS.REGEX.IFSC).required(),
         }).required(),
-        
-            
+                 
         availabilityStatus: Joi.number()
           .valid(...Object.values(CONSTANTS.AVAILABILITY_STATUS))
           .default(CONSTANTS.AVAILABILITY_STATUS.AVAILABLE),
@@ -70,13 +67,12 @@ const RiderSchema = {
       
         aadhar_details: Joi.object({
           aadhar_number: Joi.string().regex(CONSTANTS.REGEX.AADHAR).required(),
-          aadharFront: Joi.string().optional(),
-          aadharBack: Joi.string().optional(),
+          aadhar_doc: Joi.array().items(Joi.string()).length(2).required(),
         }).required(),
       
         pan_details: Joi.object({
           panNumber: Joi.string().regex(CONSTANTS.REGEX.PAN).required(),
-          pan_document: Joi.string().optional(),
+          pan_doc: Joi.string().required(),
         }).required(),
       
     }),
