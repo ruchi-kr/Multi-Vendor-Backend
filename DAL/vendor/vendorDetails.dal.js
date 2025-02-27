@@ -7,7 +7,7 @@ const VendorDetailsDal = {
   
   CreateVendorDetails: async (query) => await VendorDetails.create(query),
 
-  UpdateVendorDetails: async (filter,update) => await VendorDetails.updateOne(filter,update),
+  UpdateVendorDetails: async (filter,update,session) => await VendorDetails.updateOne(filter,update, { session }),
 
 //   DeleteOTP : async (query) =>  await otp.findByIdAndDelete(query),
 

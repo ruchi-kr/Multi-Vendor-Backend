@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { CONSTANTS } = require("../Constant");
-const { required } = require("joi");
 
 const riderDetailsSchema = new mongoose.Schema({
 
@@ -8,7 +7,10 @@ const riderDetailsSchema = new mongoose.Schema({
     driver_name: String,
     email: String,
     dob: Date,
-    gender: String,
+    gender: {
+      type: String,
+      enum: Object.values(CONSTANTS.GENDER),
+    },
     emergency_contact_number: String,
     blood_group: String,
     profession: String,
@@ -18,7 +20,7 @@ const riderDetailsSchema = new mongoose.Schema({
     license_number: String,
     license_issue_date: Date,
     license_expiry_date: Date,
-    license_document: String
+    license_doc: Array,
   },
 
   vehicle_details: {
@@ -49,7 +51,6 @@ const riderDetailsSchema = new mongoose.Schema({
   accountDetails: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "bank_details",
-    required:false
   },
 
   assignedOrders: [
@@ -103,23 +104,6 @@ const riderDetailsSchema = new mongoose.Schema({
     },
   },
 
-  aadhar_details: {
-    aadhar_number: {
-      type: Number,
-      unique: true,
-    },
-    aadharFront: String,
-    aadharBack: String,
-  },
-
-  pan_details: {
-    panNumber: {
-      type: String,
-      unique: true,
-    },
-    pan_document: String,
-  },
-
   requestedOrders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'orders' }],
 
   ordersAccepted: [mongoose.Schema.Types.ObjectId], // Or just count
@@ -138,6 +122,24 @@ const riderDetailsSchema = new mongoose.Schema({
     default: false,
   },
 
+  aadhar_details: {
+    aadhar_number: {
+      type: Number,
+      unique: true,
+      sparse: true,
+    },
+    aadhar_doc: Array,
+  },
+
+  pan_details: {
+    panNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    pan_doc: String,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,
@@ -147,6 +149,7 @@ const riderDetailsSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
 });
 
 module.exports = mongoose.model(

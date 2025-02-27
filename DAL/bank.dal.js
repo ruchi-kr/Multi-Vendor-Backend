@@ -9,8 +9,10 @@ const BankDetailsDal = {
 
   // UpdateBankDetails: async (filter,update) => await BankDetails.updateOne(filter,update),
 
-  CreateBankDetails: async (query, session = null) => {
-    return await BankDetails.create(query, session ? { session } : {}); // Pass session only if it exists
+  CreateBankDetails: async (query, session) => {
+    const result = await BankDetails.create([query], { session });
+    return result;
+    // return {...result}
   },
 
   UpdateBankDetails: async (filter, update, session = null) =>

@@ -147,11 +147,12 @@ const CONSTANTS = {
     },
 
     PAYMENT_MODE: {
-        CASH: 0,
+        COD: 0,
         CARD: 1,
         UPI: 2,
         WALLET: 3,
-        ONLINE: 4
+        ONLINE: 4,
+        PAY_LATER: 5
     },
 
     ORDER_TYPE: {

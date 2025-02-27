@@ -27,12 +27,18 @@ const AuthService = {
 
     SignInWithOtp: async (data) => {
         const { phone, country_code, otp, role } = data;
+        let user = await AuthDal.GetUser({ phone, country_code }, "-__v -createdAt -updatedAt");
+        if (user) {
+            if (user.role !== role) {
+                throw new ApiError(CONSTANTS_MESSAGES.MOBILE_EXISTS, StatusCodes.CONFLICT);
+            }
+        }
         const existingOtp = await AuthDal.GetOTP({ phone, country_code }, "-__v -createdAt -expiresAt");
         if (!existingOtp || existingOtp.otp !== otp || dayjs().isAfter(dayjs(existingOtp.expiresAt))) {
             throw new ApiError(CONSTANTS_MESSAGES.INVALID_OTP, StatusCodes.BAD_REQUEST);
         }
         await AuthDal.DeleteOTP(existingOtp._id);
-        let user = await AuthDal.GetUser({ phone, country_code, role }, "-__v -createdAt -updatedAt");
+
         if (!user) {
             user = await AuthDal.CreateUser({
                 phone,
@@ -44,15 +50,17 @@ const AuthService = {
                 profile_image: null,
                 name: null
             });
+
             const additionalDetailsData = await AdditionalData.createAdditionalDetails(role, user._id);
             user.additional_detail = additionalDetailsData._id;
             await user.save();
         }
+
         const token = await JwtSign({
             _id: user._id,
             phone: user.phone,
             country_code: user.country_code,
-            role: user?.role,
+            role: user.role,
         });
         return { token, user };
     },
@@ -80,6 +88,10 @@ const AuthService = {
 
     SignUp: async (data) => {
         const { email, password, confirm_password, role } = data;
+        const existingUser = await AuthDal.GetUser({ email }, "-__v -createdAt -updatedAt");
+        if (existingUser) {
+            throw new ApiError(CONSTANTS_MESSAGES.USER_EXISTS, StatusCodes.BAD_REQUEST);
+        }
         if (password !== confirm_password) {
             throw new ApiError(CONSTANTS_MESSAGES.PASSWORD_MISMATCH, StatusCodes.BAD_REQUEST);
         }
