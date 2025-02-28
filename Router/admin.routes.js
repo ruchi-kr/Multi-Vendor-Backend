@@ -11,6 +11,7 @@ const upload = multer();
 router.post("/upload-files", AdminAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 
 router.patch("/settings/:id", AdminAuth, ValidateRequest(CommonSchema.ParamsId, "params") ,ValidateRequest(AdminSchema.EditSettings, "body") , CatchAsync(AdminController.EditSettings));
+router.get("/get-profile", AdminAuth, CatchAsync(AuthController.GetProfile));
 
 // router.post("/coupon", AdminAuth, ValidatePrivilege(CONSTANTS.PRIVILEGE.PROGRAMME.ADMIN.COUPONS.id,"POST"), ValidateRequest(CouponSchema.Add,"body"), CatchAsync(CouponController.Add));
 // router.get("/coupon", ValidateRequest(CommonSchema.Pagination, "query"),CatchAsync(CouponController.GetAll));
