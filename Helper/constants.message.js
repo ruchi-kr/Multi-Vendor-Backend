@@ -1,4 +1,5 @@
 const CONSTANTS_MESSAGES = {
+    FORBIDDEN: "Role does not match",
     USER_EXISTS: "User already exists",
     USER_INACTIVE: "User inactive. Contact OPD Sure for reactivation",
     INTERNAL_SERVER_ERROR: "Something went wrong. Please try again",
