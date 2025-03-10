@@ -7,7 +7,7 @@ const DeliveryAgentDetailsDal = {
   
   CreateDeliveryAgentDetails: async (query) => await DeliveryAgentDetails.create(query),
 
-  UpdateDeliveryAgentDetails: async (filter,update) => await DeliveryAgentDetails.updateOne(filter,update),
+  UpdateDeliveryAgentDetails:async (filter, update, session) => await DeliveryAgentDetails.updateOne(filter, update, { session }),
 
 //   DeleteOTP : async (query) =>  await otp.findByIdAndDelete(query),
 

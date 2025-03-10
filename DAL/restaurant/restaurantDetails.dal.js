@@ -7,8 +7,7 @@ const RestaurantDetailsDal = {
   
   CreateRestaurantDetails: async (query) => await RestaurantDetails.create(query),
 
-  UpdateRestaurantDetails: async (filter,update) => await RestaurantDetails.updateOne(filter,update),
-
+  UpdateRestaurantDetails:  async (filter, update, session) => await RestaurantDetails.updateOne(filter, update, { session }),
 //   DeleteOTP : async (query) =>  await otp.findByIdAndDelete(query),
 
 }

@@ -9,18 +9,8 @@ const upload = multer();
 
 router.post("/upload-files", AgentAuth, upload.array('files', 2), ValidateRequest(CommonSchema.UploadFile), CatchAsync(PublicController.UploadFile))
 router.get("/get-profile", AgentAuth, CatchAsync(AuthController.GetProfile));
-
-
-// router.post("/login", ValidateRequest(AuthSchema.Login, "body"), CatchAsync(HRAuthController.Login));
-// router.post("/logout", HRAuth, CatchAsync(HRAuthController.Logout));
-
-// router.post("/corpoEmp", HRAuth, ValidateRequest(HRSchema.AddCorpUser, "body"), CatchAsync(HRController.AddCorporateEmp));
-// router.post("/corpoEmp/bulk", HRAuth, ValidateRequest(HRSchema.AddBulkCorpUser, "body"), CatchAsync(HRController.AddBulkCorporateEmp));
-// router.get("/corpoEmp", HRAuth,  ValidateRequest(CommonSchema.Pagination, "query"),CatchAsync(HRController.GetAllCorporateEmp));
-// router.patch("/corpoEmp/:id", HRAuth,  ValidateRequest(CommonSchema.ParamsId, "params") ,ValidateRequest(HRSchema.EditCorpUser, "body") , CatchAsync(HRController.EditCorporateEmp));
-// router.patch("/corpoEmp/password/:id", HRAuth,  ValidateRequest(CommonSchema.ParamsId, "params"),ValidateRequest(HRSchema.EditCorpUserPassword, "body") , CatchAsync(HRController.ResetCorporateEmpPass));
-// router.get("/corpoEmp/failedRecordsInserts/:id", HRAuth,  ValidateRequest(CommonSchema.Pagination, "query"),CatchAsync(HRController.GetAllFailedInsertsCorporateEmp));
-// router.delete("/corpoEmp/deleteFailedRecordsInserts/",HRAuth, ValidateRequest(CommonSchema.Pagination, "query"),CatchAsync(HRController.DeleteAllFailedInsertsCorporateEmp));
+router.put("/availability", AgentAuth, ValidateRequest(DeliveryAgentSchema.ChangeAvailabilty, "body"), CatchAsync(DeliveryAgentController.ChangeAvailabilty))
+router.put("/update-agent-details", AgentAuth, ValidateRequest(DeliveryAgentSchema.UpdateDeliveryAgentDetails, "body"), CatchAsync(DeliveryAgentController.UpdateDeliveryAgentDetails));
 
 
 module.exports = router;
