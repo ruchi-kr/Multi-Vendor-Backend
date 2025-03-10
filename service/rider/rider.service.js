@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const { ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
 
 const RiderService = {
 
@@ -28,7 +27,7 @@ const RiderService = {
             }
             const bankId = newBankDetails[0]._id;
             const updatedData = { ...data, accountDetails: bankId };
-            const updatedRider = await RiderDetailsDal.UpdateRiderDetails(
+           await RiderDetailsDal.UpdateRiderDetails(
                 { _id: user.additional_detail },
                 updatedData,
                 session
@@ -41,6 +40,18 @@ const RiderService = {
         } finally {
             session.endSession();
         }
+    },
+
+    ChangeAvailabilty: async (user, data) => {
+
+        const rider = await RiderDetailsDal.GetRiderDetails({ _id: user.additional_detail });
+        if (!rider) {
+            throw new ApiError(CONSTANTS_MESSAGES.RESTAURANT_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+        rider.availabilityStatus = data.availability_status;
+        await rider.save();
+        return { message: CONSTANTS_MESSAGES.AVAILABILITY_CHANGED_SUCCESSFULLY, rider };
+
     },
 
 

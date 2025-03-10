@@ -7,7 +7,6 @@ const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
 const {  ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
 
 const VendorService = {
 
@@ -55,7 +54,17 @@ const VendorService = {
         }
     },
 
+    ChangeAvailabilty: async (user, data) => {
 
+        const vendor = await VendorDetailsDal.GetVendorDetails({ _id: user.additional_detail });
+        if (!vendor) {
+            throw new ApiError(CONSTANTS_MESSAGES.RESTAURANT_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+        vendor.availabilityStatus = data.availability_status;
+        await vendor.save();
+        return { message: CONSTANTS_MESSAGES.AVAILABILITY_CHANGED_SUCCESSFULLY, vendor };
+
+    },
 
 }
 

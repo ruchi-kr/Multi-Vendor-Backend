@@ -1,36 +1,56 @@
 const dayjs = require("dayjs");
 const {
     AuthDal,
+    BankDetailsDal,
     DeliveryAgentDetailsDal,
 } = require("../../DAL");
 const { CONSTANTS_MESSAGES, NOTIFICATIONS } = require("../../Helper");
 const { JwtSign, ApiError, Utils } = require("../../Utils");
 const { StatusCodes } = require("http-status-codes");
 const { CONSTANTS } = require("../../Constant");
-const { AdditionData } = require("../../Helper/user.helper");
 
 const DeliveryAgentService = {
 
-    AddDeliveryAgentDetails: async (data) => {
-        const existingRider = await DeliveryAgentDetailsDal.findOne({ phone: data.phone });
-        if (existingRider) {
-            throw new ApiError(StatusCodes.CONFLICT, CONSTANTS_MESSAGES.USER_EXISTS);
+    UpdateDeliveryAgentDetails: async (user, data) => {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const existingAgent = await DeliveryAgentDetailsDal.GetDeliveryAgentDetails({ _id: user.additional_detail });
+            if (!existingAgent) {
+                throw new ApiError(CONSTANTS_MESSAGES.USER_NOT_FOUND, StatusCodes.NOT_FOUND);
+            }
+            let newBankDetails = null;
+            const existingBank = await BankDetailsDal.GetBankDetails({ accountNumber: data.accountDetails.accountNumber });
+            if (existingBank) {
+                newBankDetails = existingBank;
+            } else {
+                newBankDetails = await BankDetailsDal.CreateBankDetails(data.accountDetails, session);
+            }
+            const bankId = newBankDetails[0]._id;
+            const updatedData = { ...data, accountDetails: bankId };
+             await DeliveryAgentDetailsDal.UpdateDeliveryAgentDetails(
+                { _id: user.additional_detail },
+                updatedData,
+                session
+            );
+            await session.commitTransaction();
+            session.endSession();
+        } catch (error) {
+            await session.abortTransaction();
+            throw error;
+        } finally {
+            session.endSession();
         }
-        const deliveryAgentData = {
-            phone: data.phone,
-            country_code: data.country_code,
-            earningsHistory: data.earningsHistory || [],
-            createdAt: dayjs().toISOString(),
-        };
+    },
+    ChangeAvailabilty: async (user, data) => {
 
-        // Save rider details in the database
-        const newAgent = await DeliveryAgentDetailsDal.create(deliveryAgentData);
-        return newAgent;
-
-        // return {
-        //     message: CONSTANTS_MESSAGES.DELIVERY_AGENT_ADDED_SUCCESSFULLY,
-        //     rider: newAgent,
-        // };
+        const agent = await DeliveryAgentDetailsDal.GetDeliveryAgentDetails({ _id: user.additional_detail });
+        if (!agent) {
+            throw new ApiError(CONSTANTS_MESSAGES.RESTAURANT_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+        agent.availabilityStatus = data.availability_status;
+        await agent.save();
+        return { message: CONSTANTS_MESSAGES.AVAILABILITY_CHANGED_SUCCESSFULLY, agent };
 
     },
 
