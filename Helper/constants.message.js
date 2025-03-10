@@ -22,6 +22,13 @@ const CONSTANTS_MESSAGES = {
     INVALID_ROLE: "Invalid Role",
     OTP_EXPIRED: "OTP is expired.",
     OLD_NEW_PASSWORD_ERROR: "New password can't be same as old password",
+    RESTAURANT_NOT_FOUND: "Restaurant not found in database",
+    VENDOR_NOT_FOUND: "Vendor not found in database",
+    RIDER_NOT_FOUND: "Rider not found in database",
+    DELIVERY_AGENT_NOT_FOUND: "Delivery agent not found in database",
+    RIDER_INACTIVE: "Rider is inactive",
+    DELIVERY_AGENT_INACTIVE: "Delivery agent is inactive",
+    VENDOR_INACTIVE: "Vendor is inactive",
    
     SUCCESS: "API executed successfully",
     SIGN_IN_SUCCESS: "Sign in successfully",
@@ -29,14 +36,15 @@ const CONSTANTS_MESSAGES = {
     LOGOUT_SUCCESS: "Logout successfully",
     OTP_SEND_SUCCESS: "OTP sent successfully",
     RIDER_ADDED_SUCCESSFULLY: "Rider Updated successfully",
-    DELIVERY_AGENT_ADDED_SUCCESSFULLY: "Delivery agent added successfully",
-    RESTAURANT_ADDED_SUCCESSFULLY: "Restaurant added successfully",
+    DELIVERY_AGENT_ADDED_SUCCESSFULLY: "Delivery agent updated successfully",
+    RESTAURANT_ADDED_SUCCESSFULLY: "Restaurant updated successfully",
     VENDOR_ADDED_SUCCESSFULLY: "Vendor Updated successfully",
     INVALID_FILE_TYPE: "Invalid file type",
     INVALID_FILE_SIZE: "Invalid file size",
     BANK_DETAILS_EXISTS: "Bank details already exists",
     PAN_ALREADY_EXISTS: "Pan Already Exists",
-    AADHAR_ALREADY_EXISTS:"Aadhar Already Exists"
+    AADHAR_ALREADY_EXISTS:"Aadhar Already Exists",
+    AVAILABILITY_CHANGED_SUCCESSFULLY: "Availability changed successfully",
   }
   
   module.exports = CONSTANTS_MESSAGES;
